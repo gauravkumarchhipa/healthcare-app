@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* ******************************************* input color ******************************************************* */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  /* Remove Chrome's yellow/blue autofill background overlay */
+  background-color: transparent !important;
+
+  /* Force your dark theme background */
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  box-shadow: 0 0 0px 1000px transparent inset !important;
+
+  /* Force autofill text color to white */
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #000000 !important;
+
+  /* Keep your custom border */
+  border: 1px solid var(--color-input-border) !important;
+
+  /* Prevent flash effect */
+  transition: background-color 9999s ease-in-out 0s !important;
+}
+/* ******************************************************************************** */

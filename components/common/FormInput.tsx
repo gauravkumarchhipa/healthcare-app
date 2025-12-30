@@ -1,8 +1,8 @@
-import { View, Text, TextInput, Pressable } from 'react-native';
-import { ReactNode, useState } from 'react';
-import { Eye, EyeOff } from 'lucide-react-native';
+import { Eye, EyeOff } from "lucide-react-native";
+import { ReactNode, useState } from "react";
+import { Pressable, Text, TextInput, View } from "react-native";
 
-type TrimType = 'trimStart' | 'trim';
+type TrimType = "trimStart" | "trim";
 
 interface FormInputProps {
   label?: string;
@@ -13,8 +13,8 @@ interface FormInputProps {
   placeholder?: string;
   error?: string;
 
-  keyboardType?: 'default' | 'email-address' | 'numeric';
-  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
+  keyboardType?: "default" | "email-address" | "numeric";
+  autoCapitalize?: "none" | "sentences" | "words" | "characters";
 
   leftIcon?: (color: string) => ReactNode;
 
@@ -35,8 +35,8 @@ export function FormInput({
   inputRef,
   placeholder,
   error,
-  keyboardType = 'default',
-  autoCapitalize = 'none',
+  keyboardType = "default",
+  autoCapitalize = "none",
   leftIcon,
 
   isPassword = false,
@@ -44,7 +44,7 @@ export function FormInput({
   minLength,
   maxLength,
   onlyNumbers = false,
-  trimType = 'trimStart',
+  trimType = "trimStart",
 }: FormInputProps) {
   const [isFocused, setIsFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // 👁️ NEW
@@ -53,13 +53,13 @@ export function FormInput({
     let text = newValue;
 
     if (onlyNumbers) {
-      text = text.replace(/[^0-9]/g, '');
+      text = text.replace(/[^0-9]/g, "");
     }
 
-    if (trimType === 'trim') {
+    if (trimType === "trim") {
       text = text.trim();
     } else {
-      text = text.replace(/^\s+/, '').replace(/\s{2,}/g, ' ');
+      text = text.replace(/^\s+/, "").replace(/\s{2,}/g, " ");
     }
 
     if (maxLength !== undefined) {
@@ -70,12 +70,12 @@ export function FormInput({
   };
 
   const borderColor = error
-    ? 'border-red-500'
+    ? "border-red-500"
     : isFocused
-    ? 'border-white'
-    : 'border-gray-700';
+    ? "border-white"
+    : "border-gray-700";
 
-  const iconColor = error ? '#f87171' : isFocused ? '#ffffff' : '#9ca3af';
+  const iconColor = error ? "#f87171" : isFocused ? "#ffffff" : "#9ca3af";
 
   return (
     <View className="mb-4">
@@ -93,7 +93,7 @@ export function FormInput({
           placeholder={placeholder}
           placeholderTextColor="#6b7280"
           secureTextEntry={isPassword && !showPassword}
-          keyboardType={onlyNumbers ? 'numeric' : keyboardType}
+          keyboardType={onlyNumbers ? "numeric" : keyboardType}
           autoCapitalize={autoCapitalize}
           className="flex-1 py-4 px-2 text-white text-base"
           onFocus={() => setIsFocused(true)}

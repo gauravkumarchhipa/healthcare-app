@@ -11,6 +11,7 @@ import { usePublicRouteGuard } from "@/hooks/usePublicRouteGuard";
 import { login } from "@/store/slices/auth/authSlice";
 import { AppDispatch } from "@/store/store";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import Toast from "react-native-toast-message";
 import { useDispatch } from "react-redux";
 import {
   SignInFormValues,
@@ -42,6 +43,11 @@ export default function SignInScreen() {
         password: data.password,
       })
     );
+    Toast.show({
+      type: "success",
+      text1: "Success",
+      text2: "Logged in successfully 👋",
+    });
     router.push("/home");
 
     console.log("LOGGED IN & STORED");

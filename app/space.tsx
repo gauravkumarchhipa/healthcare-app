@@ -160,8 +160,16 @@ export default function SpaceScreen() {
       {/* Header with Skip button */}
       <View className="flex-row justify-between items-center pt-12 px-6 pb-4">
         <View className="flex-row items-center">
-          <Heart size={24} color="#3B82F6" className="mr-2" />
-          <Text className="text-2xl font-bold text-[#333]">MedNexus</Text>
+          <Heart
+            size={24}
+            color="#FF0000"
+            strokeWidth={1.5}
+            fill="#FF0000"
+            className="mr-2"
+          />
+          <Text className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FF0000] to-[#0047AB]">
+            ForHealth
+          </Text>
         </View>
         <TouchableOpacity onPress={handleSkip} className="p-2">
           <Text className="text-orange-400 text-lg font-medium">Skip</Text>

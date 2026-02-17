@@ -2,12 +2,24 @@ import { RootState } from "@/store/store";
 import { Redirect, type Href } from "expo-router";
 import { Activity, Heart, Plus } from "lucide-react-native";
 import { useEffect, useRef, useState } from "react";
-import { Animated, Text, View } from "react-native";
+import { Animated, Dimensions, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 
 export default function SplashScreen() {
   const loading = false;
   const auth = useSelector((state: RootState) => state.auth);
+
+  const [isLandscape, setIsLandscape] = useState(
+    Dimensions.get("window").width > Dimensions.get("window").height,
+  );
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener("change", ({ window }) => {
+      setIsLandscape(window.width > window.height);
+    });
+
+    return () => subscription?.remove();
+  }, []);
 
   const scaleAnim = useRef(new Animated.Value(0.6)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
@@ -16,7 +28,6 @@ export default function SplashScreen() {
   const pulseAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    // Main entrance animation
     Animated.parallel([
       Animated.timing(scaleAnim, {
         toValue: 1,
@@ -35,7 +46,6 @@ export default function SplashScreen() {
       }),
     ]).start();
 
-    // Continuous rotation animation
     Animated.loop(
       Animated.timing(rotateAnim, {
         toValue: 1,
@@ -44,7 +54,6 @@ export default function SplashScreen() {
       }),
     ).start();
 
-    // Pulse animation for heart
     Animated.loop(
       Animated.sequence([
         Animated.timing(pulseAnim, {
@@ -61,14 +70,12 @@ export default function SplashScreen() {
     ).start();
   }, []);
 
-  // Wait until splash animation + auth check
   if (loading) return null;
 
   return (
     <>
-      {/* SPLASH UI */}
-      <View className="flex-1 items-center justify-center bg-white relative overflow-hidden">
-        {/* Background decorative elements */}
+      <View className="flex-1 bg-white relative overflow-hidden">
+        {/* Decorative Icons */}
         <Animated.View
           style={{
             transform: [
@@ -79,9 +86,11 @@ export default function SplashScreen() {
                 }),
               },
             ],
-            opacity: 0.1,
+            opacity: 0.08,
+            position: "absolute",
+            top: "10%",
+            right: "10%",
           }}
-          className="absolute top-10 right-10"
         >
           <Activity size={120} color="#FF0000" strokeWidth={1} />
         </Animated.View>
@@ -96,89 +105,65 @@ export default function SplashScreen() {
                 }),
               },
             ],
-            opacity: 0.08,
+            opacity: 0.06,
+            position: "absolute",
+            bottom: "15%",
+            left: "10%",
           }}
-          className="absolute bottom-10 left-10"
         >
           <Plus size={100} color="#0047AB" strokeWidth={1} />
         </Animated.View>
 
-        {/* Central healthcare icon container */}
+        {/* CENTER CONTENT */}
         <Animated.View
           style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
             transform: [{ scale: scaleAnim }, { translateY: translateYAnim }],
             opacity: opacityAnim,
           }}
-          className="items-center"
         >
-          {/* Unique heart design with glow effect */}
+          {/* Heart Glow */}
           <View className="relative items-center justify-center mb-10">
-            {/* Glow ring with red theme */}
             <View className="absolute w-36 h-36 rounded-full bg-red-100 opacity-40" />
             <View className="absolute w-32 h-32 rounded-full bg-red-200 opacity-30" />
             <View className="absolute w-28 h-28 rounded-full bg-red-300 opacity-20" />
 
-            {/* Animated heart */}
-            <Animated.View
-              style={{
-                transform: [{ scale: pulseAnim }],
-              }}
-            >
-              <Heart
-                size={80}
-                color="#FF0000"
-                strokeWidth={1.5}
-                fill="#FF0000"
-              />
+            <Animated.View style={{ transform: [{ scale: pulseAnim }] }}>
+              <Heart size={80} color="#FF0000" fill="#FF0000" />
             </Animated.View>
           </View>
 
-          {/* Unique app name design */}
-          <View className="items-center">
-            <Text className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FF0000] to-[#0047AB] mb-2">
-              ForHealth
-            </Text>
-            <View className="bg-gradient-to-r from-[#4682B4] to-[#FF0000] h-0.5 w-24 mb-3" />
-            <Text className="text-xl text-[#4682B4] font-medium tracking-wider">
-              HALO GP
-            </Text>
-          </View>
+          {/* App Name */}
+          <Text className="text-5xl font-bold text-[#1e3a8a] mb-2">
+            ForHealth
+          </Text>
+
+          <View className="h-0.5 w-24 bg-[#4682B4] mb-3" />
+
+          <Text className="text-[#4682B4] text-xl font-medium tracking-wider">
+            HALO GP
+          </Text>
         </Animated.View>
 
-        {/* Unique powered by design */}
-        <View className="absolute bottom-12 flex-row items-center">
-          <View className="w-2 h-2 rounded-full bg-[#FF0000] mr-2" />
-          <Text className="text-sm text-gray-500">
-            Powered by <Text className="font-bold text-[#FF0000]">HotDoc</Text>
-          </Text>
+        {/* 🔥 POWERED BY - RIGHT ALIGNED */}
+        <View
+          className={`absolute bottom-12 ${
+            isLandscape ? "right-6 items-end" : "left-0 right-0 items-center"
+          }`}
+        >
+          <View className="flex-row items-center">
+            <View className="w-2 h-2 rounded-full bg-[#FF0000] mr-2" />
+            <Text className="text-gray-500 text-sm text-right">
+              Powered by{" "}
+              <Text className="font-bold text-[#FF0000]">HotDoc</Text>
+            </Text>
+          </View>
         </View>
-
-        {/* Floating particles */}
-        {[...Array(6)].map((_, i) => (
-          <Animated.View
-            key={i}
-            style={{
-              left: `${20 + i * 15}%`,
-              top: `${30 + i * 10}%`,
-              transform: [
-                {
-                  translateY: translateYAnim.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, -20 - i * 10],
-                  }),
-                },
-              ],
-              opacity: opacityAnim.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, 0.3 - i * 0.05],
-              }),
-            }}
-            className={`absolute w-2 h-2 rounded-full ${i % 2 === 0 ? "bg-[#FF0033]" : "bg-[#4682B4]"}`}
-          />
-        ))}
       </View>
 
-      {/* REDIRECT AFTER 2 SECONDS */}
+      {/* Redirect after delay */}
       <DelayedRedirect to={auth?.email ? "/home" : "/space"} />
     </>
   );

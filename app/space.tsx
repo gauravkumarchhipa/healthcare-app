@@ -123,8 +123,15 @@ export default function SpaceScreen() {
   const renderPagination = () => (
     <View className="flex-row justify-center items-center mb-6">
       {onboardingData.map((_, index) => (
-        <View
+        <TouchableOpacity
           key={index}
+          onPress={() => {
+            setCurrentIndex(index);
+            flatListRef.current?.scrollToOffset({
+              offset: width * index,
+              animated: true,
+            });
+          }}
           className={`h-2 rounded-full mx-1 ${
             index === currentIndex ? "w-8 bg-[#2563eb]" : "w-2 bg-gray-300"
           }`}

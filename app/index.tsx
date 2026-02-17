@@ -68,7 +68,7 @@ export default function SplashScreen() {
         }),
       ]),
     ).start();
-  }, []);
+  }, [scaleAnim, opacityAnim, translateYAnim, rotateAnim, pulseAnim]);
 
   if (loading) return null;
 

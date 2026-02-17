@@ -27,7 +27,7 @@ export default function SignUpScreen() {
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitting, isValid, isSubmitted },
+    formState: { errors },
   } = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {

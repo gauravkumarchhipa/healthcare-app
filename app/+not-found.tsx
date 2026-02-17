@@ -60,12 +60,13 @@ export default function NotFoundScreen() {
           <Text
             className={`text-gray-600 text-center ${isLandscape ? "text-sm mb-6" : "mb-8"}`}
           >
-            The page you are looking for doesn't exist or was moved.
+            The page you are looking for doesn&apos;t exist or was moved.
           </Text>
 
           <TouchableOpacity
             onPress={() => {
-              auth?.email ? router.replace("/home") : router.replace("/signin");
+              const destination = auth?.email ? "/home" : "/signin";
+              router.replace(destination);
             }}
             activeOpacity={0.8}
             className="w-full"

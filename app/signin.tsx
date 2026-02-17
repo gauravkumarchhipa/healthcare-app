@@ -31,7 +31,7 @@ export default function SignInScreen() {
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitting, isValid, isSubmitted },
+    formState: { errors },
   } = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -163,7 +163,7 @@ export default function SignInScreen() {
 
             <View className="mt-8 mb-16">
               <Text className="text-gray-500 text-center">
-                Don't have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <Text
                   className="text-[#2563eb] font-semibold"
                   onPress={() => router.push("/signup")}

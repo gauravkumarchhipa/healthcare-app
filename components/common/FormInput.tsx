@@ -95,7 +95,7 @@ export function FormInput({
           secureTextEntry={isPassword && !showPassword}
           keyboardType={onlyNumbers ? "numeric" : keyboardType}
           autoCapitalize={autoCapitalize}
-          className="flex-1 py-4 px-2 text-gray-800 text-base"
+          className="flex-1 py-4 px-2 text-gray-900 text-base"
           onFocus={() => setIsFocused(true)}
           onBlur={onBlur}
         />

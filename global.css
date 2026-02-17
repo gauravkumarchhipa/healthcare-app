@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* ******************************************* input color ******************************************************* */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -21,7 +20,7 @@ select:-webkit-autofill:focus {
   box-shadow: 0 0 0px 1000px transparent inset !important;
 
   /* Force autofill text color to white */
-  -webkit-text-fill-color: #ffffff !important;
+  -webkit-text-fill-color: #111827 !important;
   caret-color: #000000 !important;
 
   /* Keep your custom border */

@@ -1,4 +1,5 @@
 import { usePublicRouteGuard } from "@/hooks/usePublicRouteGuard";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import {
   Activity,
@@ -137,8 +138,8 @@ export default function SpaceScreen() {
       {/* HEADER */}
       <View className="absolute top-0 left-0 right-0 z-10 flex-row justify-between items-center px-6 pt-4">
         <View className="flex-row items-center">
-          <Heart size={22} color="#FF0000" fill="#FF0000" />
-          <Text className="text-2xl font-bold ml-2 text-[#1e3a8a]">
+          <Heart size={22} color="#FF0000" fill="#FF0000" className="mb-1.5" />
+          <Text className="text-2xl ml-2 font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FF0000] to-[#0047AB] mb-2">
             ForHealth
           </Text>
         </View>
@@ -177,15 +178,24 @@ export default function SpaceScreen() {
       <View className="px-8 pb-8">
         {renderPagination()}
 
-        <TouchableOpacity
-          onPress={handleNext}
-          className="bg-[#2563eb] py-4 rounded-full w-full"
-        >
-          <Text className="text-white text-center text-lg font-semibold">
-            {currentIndex === onboardingData.length - 1
-              ? "Get Started"
-              : "Next"}
-          </Text>
+        <TouchableOpacity onPress={handleNext} activeOpacity={0.8}>
+          <LinearGradient
+            colors={["#FF0000", "#0047AB"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{
+              paddingVertical: 16,
+              borderRadius: 999,
+              width: "100%",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ color: "#fff", fontSize: 18, fontWeight: "600" }}>
+              {currentIndex === onboardingData.length - 1
+                ? "Get Started"
+                : "Next"}
+            </Text>
+          </LinearGradient>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

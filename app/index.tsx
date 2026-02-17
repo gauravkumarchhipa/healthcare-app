@@ -112,7 +112,7 @@ export default function SplashScreen() {
           className="items-center"
         >
           {/* Unique heart design with glow effect */}
-          <View className="relative items-center justify-center mb-8">
+          <View className="relative items-center justify-center mb-10">
             {/* Glow ring with red theme */}
             <View className="absolute w-36 h-36 rounded-full bg-red-100 opacity-40" />
             <View className="absolute w-32 h-32 rounded-full bg-red-200 opacity-30" />

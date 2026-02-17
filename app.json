@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "myNativeApp",
-    "slug": "myNativeApp",
+    "name": "healthcare-app",
+    "slug": "healthcare-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "mynativeapp",
+    "scheme": "healthcare-app",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {

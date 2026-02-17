@@ -8,7 +8,7 @@ import {
   Stethoscope,
   Users,
 } from "lucide-react-native";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Dimensions,
   FlatList,
@@ -25,6 +25,18 @@ export default function SpaceScreen() {
   const router = useRouter();
   const flatListRef = useRef<FlatList>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLandscape, setIsLandscape] = useState(
+    Dimensions.get("window").width > Dimensions.get("window").height,
+  );
+
+  useEffect(() => {
+    const onChange = ({ window }: { window: any }) => {
+      setIsLandscape(window.width > window.height);
+    };
+
+    const subscription = Dimensions.addEventListener("change", onChange);
+    return () => subscription?.remove();
+  }, []);
 
   const onboardingData = [
     {
@@ -90,32 +102,47 @@ export default function SpaceScreen() {
     return (
       <View
         style={{ width }}
-        className="flex-1 justify-center items-center px-8"
+        className={`flex-1 justify-center items-center px-8 ${isLandscape ? "flex-row" : "flex-col"}`}
       >
         {/* ICON */}
-        <View className="mb-12 items-center justify-center">
+        <View
+          className={`items-center justify-center ${isLandscape ? "mr-8 w-1/3" : "mb-12 w-full"}`}
+        >
           <View
             style={{ backgroundColor: item.color + "20" }}
-            className="absolute w-44 h-44 rounded-full"
+            className={`absolute rounded-full ${isLandscape ? "w-32 h-32" : "w-44 h-44"}`}
           />
           <View
             style={{ backgroundColor: item.color + "35" }}
-            className="absolute w-36 h-36 rounded-full"
+            className={`absolute rounded-full ${isLandscape ? "w-28 h-28" : "w-36 h-36"}`}
           />
-          <View className="w-28 h-28 bg-white rounded-full shadow-xl items-center justify-center">
-            <Icon size={70} color={item.color} strokeWidth={1.5} />
+          <View
+            className={`bg-white rounded-full shadow-xl items-center justify-center ${isLandscape ? "w-24 h-24" : "w-28 h-28"}`}
+          >
+            <Icon
+              size={isLandscape ? 50 : 70}
+              color={item.color}
+              strokeWidth={1.5}
+            />
           </View>
         </View>
 
-        {/* TITLE */}
-        <Text className="text-3xl font-bold text-[#2563eb] text-center mb-4">
-          {item.title}
-        </Text>
+        {/* TEXT CONTENT */}
+        <View className={isLandscape ? "flex-1" : "w-full"}>
+          {/* TITLE */}
+          <Text
+            className={`font-bold text-[#2563eb] text-center ${isLandscape ? "text-xl mb-2" : "text-3xl mb-4"}`}
+          >
+            {item.title}
+          </Text>
 
-        {/* DESCRIPTION */}
-        <Text className="text-lg text-gray-600 text-center leading-relaxed px-4">
-          {item.description}
-        </Text>
+          {/* DESCRIPTION */}
+          <Text
+            className={`text-gray-600 text-center leading-relaxed px-4 ${isLandscape ? "text-sm" : "text-lg"}`}
+          >
+            {item.description}
+          </Text>
+        </View>
       </View>
     );
   };
@@ -173,8 +200,8 @@ export default function SpaceScreen() {
           contentContainerStyle={{
             flexGrow: 1,
             justifyContent: "center",
-            paddingTop: 150, // space for header
-            paddingBottom: 100, // space for bottom button
+            paddingTop: isLandscape ? 120 : 150,
+            paddingBottom: isLandscape ? 80 : 100,
           }}
           getItemLayout={(_, index) => ({
             length: width,
@@ -185,7 +212,7 @@ export default function SpaceScreen() {
       </View>
 
       {/* BOTTOM */}
-      <View className="px-8 pb-8">
+      <View className={`px-8 ${isLandscape ? "pb-4" : "pb-8"}`}>
         {renderPagination()}
 
         <TouchableOpacity onPress={handleNext} activeOpacity={0.8}>
@@ -194,13 +221,19 @@ export default function SpaceScreen() {
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={{
-              paddingVertical: 16,
+              paddingVertical: isLandscape ? 12 : 16,
               borderRadius: 999,
               width: "100%",
               alignItems: "center",
             }}
           >
-            <Text style={{ color: "#fff", fontSize: 18, fontWeight: "600" }}>
+            <Text
+              style={{
+                color: "#fff",
+                fontSize: isLandscape ? 16 : 18,
+                fontWeight: "600",
+              }}
+            >
               {currentIndex === onboardingData.length - 1
                 ? "Get Started"
                 : "Next"}

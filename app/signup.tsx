@@ -1,11 +1,16 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import { Lock, Mail, User, UserCircle } from "lucide-react-native";
+import { Heart, Lock, Mail, User, UserCircle } from "lucide-react-native";
 import { Controller, useForm } from "react-hook-form";
-import { KeyboardAvoidingView, Platform, Text, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
-import { Button } from "@/components/common/Button";
 import { FormInput } from "@/components/common/FormInput";
 import { usePublicRouteGuard } from "@/hooks/usePublicRouteGuard";
 import {
@@ -13,6 +18,7 @@ import {
   signUpSchema,
 } from "@/validation/signup/signup.schema";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SignUpScreen() {
   usePublicRouteGuard();
@@ -40,10 +46,7 @@ export default function SignUpScreen() {
   };
 
   return (
-    <LinearGradient
-      colors={["#0a0a0a", "#1a1a2e", "#16213e"]}
-      className="flex-1"
-    >
+    <SafeAreaView className="flex-1 bg-white">
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"
@@ -53,10 +56,28 @@ export default function SignUpScreen() {
           enableOnAndroid
           keyboardShouldPersistTaps="handled"
         >
-          <View className="flex-1 px-6 justify-center">
-            <View className="mb-12 mt-16">
-              <Text className="text-4xl font-bold text-white mb-3 text-center">
+          {/* HEADER */}
+          <View className="flex-row justify-between items-center px-6 pt-4 mb-8">
+            <View className="flex-row items-center">
+              <Heart
+                size={22}
+                color="#FF0000"
+                fill="#FF0000"
+                className="mb-1.5"
+              />
+              <Text className="text-2xl ml-2 font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FF0000] to-[#0047AB] mb-2">
+                ForHealth
+              </Text>
+            </View>
+          </View>
+
+          <View className="flex-1 px-8 justify-center">
+            <View className="mb-12">
+              <Text className="text-4xl font-bold text-[#2563eb] mb-3 text-center">
                 Sign Up
+              </Text>
+              <Text className="text-lg text-gray-600 text-center">
+                Create your account to start your health journey
               </Text>
             </View>
 
@@ -137,19 +158,36 @@ export default function SignUpScreen() {
                 )}
               />
 
-              <Button
-                title="Sign Up"
+              <TouchableOpacity
                 onPress={handleSubmit(onSubmit)}
-                loading={isSubmitting}
-                disabled={isSubmitting || (isSubmitted && !isValid)}
-              />
+                activeOpacity={0.8}
+                className="mt-6"
+              >
+                <LinearGradient
+                  colors={["#FF0000", "#0047AB"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={{
+                    paddingVertical: 16,
+                    borderRadius: 999,
+                    width: "100%",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text
+                    style={{ color: "#fff", fontSize: 18, fontWeight: "600" }}
+                  >
+                    Sign Up
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
             </View>
 
             <View className="mt-8 mb-16">
               <Text className="text-gray-500 text-center">
-                have an account?{" "}
+                Already have an account?{" "}
                 <Text
-                  className="text-blue-500 font-semibold"
+                  className="text-[#2563eb] font-semibold"
                   onPress={() => router.push("/signin")}
                 >
                   Sign In
@@ -159,6 +197,6 @@ export default function SignUpScreen() {
           </View>
         </KeyboardAwareScrollView>
       </KeyboardAvoidingView>
-    </LinearGradient>
+    </SafeAreaView>
   );
 }

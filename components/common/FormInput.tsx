@@ -66,23 +66,23 @@ export function FormInput({
       text = text.slice(0, maxLength);
     }
 
-    onChangeText(text);
+    onChangeText?.(text);
   };
 
   const borderColor = error
     ? "border-red-500"
     : isFocused
-    ? "border-white"
-    : "border-gray-700";
+      ? "border-[#2563eb]"
+      : "border-gray-300";
 
-  const iconColor = error ? "#f87171" : isFocused ? "#ffffff" : "#9ca3af";
+  const iconColor = error ? "#f87171" : isFocused ? "#2563eb" : "#9ca3af";
 
   return (
     <View className="mb-4">
-      {label && <Text className="text-gray-400 mb-2 ml-1">{label}</Text>}
+      {label && <Text className="text-gray-600 mb-2 ml-1">{label}</Text>}
 
       <View
-        className={`flex-row items-center rounded-xl border px-4 bg-white/10 ${borderColor}`}
+        className={`flex-row items-center rounded-xl border px-4 bg-white ${borderColor}`}
       >
         {leftIcon && <View className="mr-2">{leftIcon(iconColor)}</View>}
 
@@ -91,11 +91,11 @@ export function FormInput({
           value={value}
           onChangeText={handleChange}
           placeholder={placeholder}
-          placeholderTextColor="#6b7280"
+          placeholderTextColor="#9ca3af"
           secureTextEntry={isPassword && !showPassword}
           keyboardType={onlyNumbers ? "numeric" : keyboardType}
           autoCapitalize={autoCapitalize}
-          className="flex-1 py-4 px-2 text-white text-base"
+          className="flex-1 py-4 px-2 text-gray-800 text-base"
           onFocus={() => setIsFocused(true)}
           onBlur={onBlur}
         />
@@ -112,13 +112,13 @@ export function FormInput({
         )}
       </View>
 
-      {error && <Text className="text-red-400 text-sm mt-1 ml-1">{error}</Text>}
+      {error && <Text className="text-red-500 text-sm mt-1 ml-1">{error}</Text>}
 
       {!error &&
         minLength !== undefined &&
         value.length > 0 &&
         value.length < minLength && (
-          <Text className="text-red-400 text-sm mt-1 ml-1">
+          <Text className="text-red-500 text-sm mt-1 ml-1">
             Minimum {minLength} characters required
           </Text>
         )}

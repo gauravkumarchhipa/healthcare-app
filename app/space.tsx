@@ -32,7 +32,7 @@ export default function SpaceScreen() {
       title: "All Your Health in One Place",
       description: "Access doctors, labs, and pharmacies from one place.",
       icon: Heart,
-      color: "#3B82F6",
+      color: "#FF0000",
     },
     {
       id: 2,
@@ -144,8 +144,11 @@ export default function SpaceScreen() {
           </Text>
         </View>
 
-        <TouchableOpacity onPress={handleSkip}>
-          <Text className="text-orange-500 text-lg font-medium">Skip</Text>
+        <TouchableOpacity
+          onPress={handleSkip}
+          className="bg-orange-50 backdrop-blur-xl rounded-lg px-3 py-1"
+        >
+          <Text className="text-orange-500 text-lg font-semibold">Skip</Text>
         </TouchableOpacity>
       </View>
 
